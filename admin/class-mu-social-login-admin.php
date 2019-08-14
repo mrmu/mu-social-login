@@ -57,10 +57,10 @@ class Mu_Social_Login_Admin {
 	public function add_menu_items() {
 		add_submenu_page(
 			'options-general.php',
-			'Pan Login',
-			'Pan Login',
+			'Social Login',
+			'Social Login',
 			'manage_options',
-			'pan_login',
+			'msl_login',
 			array( $this, 'display_settings_page' )
 		);
 	}
@@ -70,7 +70,7 @@ class Mu_Social_Login_Admin {
 	}
 
 	public function create_settings() {
-		$settings = new Wp_Pan_Login_Settings( $this->plugin_name, $this->version);
+		$settings = new Mu_Social_Login_Settings( $this->plugin_name, $this->version);
 		$settings->register();
 	}
 
@@ -93,7 +93,13 @@ class Mu_Social_Login_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/mu-social-login-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 
+			$this->plugin_name, 
+			plugin_dir_url( __FILE__ ) . 'css/mu-social-login-admin.css', 
+			array(), 
+			filemtime( (dirname( __FILE__ )) . '/css/mu-social-login-admin.css' ), 
+			'all' 
+		);
 
 	}
 
@@ -116,7 +122,13 @@ class Mu_Social_Login_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mu-social-login-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( 
+			$this->plugin_name, 
+			plugin_dir_url( __FILE__ ) . 'js/mu-social-login-admin.js', 
+			array( 'jquery' ), 
+			filemtime( (dirname( __FILE__ )) . '/js/mu-social-login-admin.js' ), 
+			false 
+		);
 
 	}
 

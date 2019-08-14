@@ -176,31 +176,13 @@ class Mu_Social_Login {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_ajax_msl_facebook_login', $plugin_public, 'fb_login_or_register_user' );
+		$this->loader->add_action( 'wp_ajax_nopriv_msl_facebook_login', $plugin_public, 'fb_login_or_register_user' );
+		$this->loader->add_action( 'wp_ajax_msl_google_login', $plugin_public, 'google_login_or_register_user' );
+		$this->loader->add_action( 'wp_ajax_nopriv_msl_google_login', $plugin_public, 'google_login_or_register_user' );
+		$this->loader->add_action( 'wp_head', $plugin_public, 'add_google_meta_tags');
 
-		// $this->loader->add_action( 'pan_login_button', $this->plugin_public, 'print_button' );
-		// //$this->loader->add_action( 'pan_login_button', $this->plugin_public, 'add_pan_scripts' );
-		// $this->loader->add_action( 'wp', $this->plugin_public, 'get_token_by_code');
-		// $this->loader->add_action( 'wp_ajax_wpl_pan_login', $this->plugin_public, 'login_or_register_user' );
-		// $this->loader->add_action( 'wp_ajax_nopriv_wpl_pan_login', $this->plugin_public, 'login_or_register_user' );
-
-		$this->loader->add_action( 'pan_login_form', $this->plugin_public, 'add_fb_scripts' );
-		$this->loader->add_action( 'wp_ajax_msl_facebook_login', $this->plugin_public, 'fb_login_or_register_user' );
-		$this->loader->add_action( 'wp_ajax_nopriv_msl_facebook_login', $this->plugin_public, 'fb_login_or_register_user' );
-		$this->loader->add_action( 'wp_ajax_msl_google_login', $this->plugin_public, 'google_login_or_register_user' );
-		$this->loader->add_action( 'wp_ajax_nopriv_msl_google_login', $this->plugin_public, 'google_login_or_register_user' );
-		$this->loader->add_action( 'wp_head', $this->plugin_public, 'add_google_meta_tags');
-
-		// $this->loader->add_action( 'wp_ajax_wpl_normal_login', $this->plugin_public, 'normal_login' );
-		// $this->loader->add_action( 'wp_ajax_nopriv_wpl_normal_login', $this->plugin_public, 'normal_login' );
-
-		// $this->loader->add_action( 'wp_ajax_wpl_do_pwd_login', $this->plugin_public, 'do_pwd_login' );
-		// $this->loader->add_action( 'wp_ajax_nopriv_wpl_do_pwd_login', $this->plugin_public, 'do_pwd_login' );
-
-		// $this->loader->add_action( 'wp_ajax_fv_login', $this->plugin_public, 'fv_login' );
-		// $this->loader->add_action( 'wp_ajax_nopriv_fv_login', $this->plugin_public, 'fv_login' );
-
-		// $this->loader->add_action( 'wp_ajax_wpl_normal_reg', $this->plugin_public, 'normal_reg' );
-		// $this->loader->add_action( 'wp_ajax_nopriv_wpl_normal_reg', $this->plugin_public, 'normal_reg' );
+		add_shortcode('msl_btn', array($plugin_public, 'msl_btn_shortcode'));
 	}
 
 	/**

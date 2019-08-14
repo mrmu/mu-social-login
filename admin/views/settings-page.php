@@ -5,11 +5,11 @@
 ?>
 
 <?php
-	$active_tab = "msl-options";
+	$active_tab = "fb-options";
 	if(isset($_GET["tab"])) {
-		if($_GET["tab"] == "google-options") {
+		if ($_GET["tab"] == "google-options") {
 			$active_tab = "google-options";
-		}elseif($_GET["tab"] == "fb-options"){
+		}elseif ($_GET["tab"] == "fb-options"){
 			$active_tab = "fb-options";
 		}
 	}
@@ -21,8 +21,8 @@
 
 	<!-- wordpress provides the styling for tabs. -->
 	<h2 class="nav-tab-wrapper">
-		<a href="?page=pan_login&tab=fb-options" class="nav-tab <?php if($active_tab == 'fb-options'){echo 'nav-tab-active';} ?>"><?php echo 'FB 登入';?></a>
-		<a href="?page=pan_login&tab=google-options" class="nav-tab <?php if($active_tab == 'google-options'){echo 'nav-tab-active';} ?> "><?php echo 'Google 登入'; ?></a>
+		<a href="?page=msl_login&tab=fb-options" class="nav-tab <?php if($active_tab == 'fb-options'){echo 'nav-tab-active';} ?>"><?php echo 'FB 登入';?></a>
+		<a href="?page=msl_login&tab=google-options" class="nav-tab <?php if($active_tab == 'google-options'){echo 'nav-tab-active';} ?> "><?php echo 'Google 登入'; ?></a>
 	</h2>
 
 	<form method="post" action="options.php">

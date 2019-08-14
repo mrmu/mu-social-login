@@ -12,12 +12,31 @@ window.onLoad = function() {
     window.MuSocialLogin = {};
 
     MuSocialLogin.init = function () {
-        //$('.btn_google_login').show();
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : msl.fb_app_id,
+                cookie     : true,  // enable cookies to allow the server to access
+                xfbml      : true,  // parse social plugins on this page
+                version    : 'v3.3'
+            });
+
+        };
+
+        // Load the SDK asynchronously
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
     };
 
     // Send data to Server and show result on UI
     MuSocialLogin.sendToServer = function(data, $form_obj, $redirect_to) {
         $form_obj.find('.msl_error').remove();
+        console.log(data);
+        console.log(msl.ajaxurl);
         $.ajax({
             data: data,
             global: false,
@@ -57,6 +76,7 @@ window.onLoad = function() {
 	
     // Google Login Btn
     $( document ).on( 'click', '.btn_google_login', function( e ) {
+        $(this).prop('disabled', true);
 		e.preventDefault();
 		window.msl_button = $(this);
 		window.msl_button.addClass('loading');
@@ -95,6 +115,8 @@ window.onLoad = function() {
             };
 
         MuSocialLogin.sendToServer($data, $form_obj, $redirect_to);
+        $('.fa-spinner ').addClass('d-none');
+        // $('.btn_google_login').prop('disabled', false);
     };
     MuSocialLogin.gapi_signinChanged = function() {
         //console.log('the user must be signed in to print this');
@@ -102,6 +124,7 @@ window.onLoad = function() {
 
     // FB Login Btn
     $( document ).on( 'click', '.btn_fb_login', function( e ) {
+        $(this).prop('disabled', true);
         e.preventDefault();
         window.msl_button    = $(this);
         window.msl_button.addClass('loading');
@@ -134,6 +157,7 @@ window.onLoad = function() {
             window.msl_button.removeClass('loading');
             window.msl_button.parents('div.container-fluid').removeClass('d-none');
             $('.fa-spinner ').addClass('d-none');
+            $('.btn_fb_login').prop('disabled', false);
             if( navigator.userAgent.match('CriOS') )
                 window.open('https://www.facebook.com/dialog/oauth?client_id=' + msl.fb_app_id + '&redirect_uri=' + document.location.href + '&scope=email,public_profile', '', null);
         }
