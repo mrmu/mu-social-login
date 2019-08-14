@@ -306,7 +306,8 @@ class Mu_Social_Login_Public {
 			shortcode_atts( 
 				array(
 					'type' => '0',
-					'redirect_to' => ''
+					'redirect_to' => '',
+					'class' => 'btn'
 				), 
 				$attr 
 			) 
@@ -316,10 +317,10 @@ class Mu_Social_Login_Public {
 		$btn = '';
 		if ($type === 'fb'){ 
 			$nonce = wp_create_nonce( 'facebook-nonce' );
-			$btn = '<button type="button" class="btn btn_fb_login" data-fb_nonce="'. $nonce . '" data-redirect="'.$redirect_to.'">'.$content.'</button>';
+			$btn = '<button type="button" class="btn_fb_login '.$class.'" data-fb_nonce="'. $nonce . '" data-redirect="'.$redirect_to.'">'.$content.'</button>';
 		}elseif ($type === 'google') { 
 			$nonce = wp_create_nonce( 'google-nonce' );
-			$btn = '<button type="button" class="btn btn_google_login" data-google_nonce="'. $nonce.'" data-redirect="'.$redirect_to.'">'. $content.'</button>';
+			$btn = '<button type="button" class="btn_google_login '.$class.'" data-google_nonce="'. $nonce.'" data-redirect="'.$redirect_to.'">'. $content.'</button>';
 		}
 		return $btn;
 	}
