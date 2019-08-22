@@ -75,13 +75,13 @@ class Mu_Social_Login_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( 
-			$this->plugin_name, 
-			plugin_dir_url( __FILE__ ) . 'css/mu-social-login-public.css', 
-			array(), 
-			filemtime( (dirname( __FILE__ )) . '/css/mu-social-login-public.css' ), 
-			'all' 
-		);
+		// wp_enqueue_style( 
+		// 	$this->plugin_name, 
+		// 	plugin_dir_url( __FILE__ ) . 'css/mu-social-login-public.css', 
+		// 	array(), 
+		// 	filemtime( (dirname( __FILE__ )) . '/css/mu-social-login-public.css' ), 
+		// 	'all' 
+		// );
 
 	}
 
