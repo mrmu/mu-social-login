@@ -41,6 +41,7 @@ class Mu_Social_Login_Public {
 	private $version;
 	private $fb_opts;
 	private $google_opts;
+	private $general_opts;
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -54,6 +55,7 @@ class Mu_Social_Login_Public {
 		$this->version = $version;
 		$this->fb_opts = get_option('msl_fb_settings');
 		$this->google_opts = get_option('msl_google_settings');
+		$this->general_opts = get_option('msl_general_settings');
 	}
 
 	/**
@@ -104,38 +106,50 @@ class Mu_Social_Login_Public {
 		 * class.
 		 */
 
-		wp_enqueue_script( 
-			$this->plugin_name, 
-			plugin_dir_url( __FILE__ ) . 'js/mu-social-login-public.js', 
-			array( 'jquery' ), 
-			filemtime( (dirname( __FILE__ )) . '/js/mu-social-login-public.js' ), 
-			false 
-		);
+		$login_page_slug = $this->general_opts['login_page_slug'];
+		if (empty($login_page_slug)) {
+			$login_page_slug = 'login';
+		}
+		if (is_page($login_page_slug)) {
+			wp_enqueue_script( 
+				$this->plugin_name, 
+				plugin_dir_url( __FILE__ ) . 'js/mu-social-login-public.js', 
+				array( 'jquery' ), 
+				filemtime( (dirname( __FILE__ )) . '/js/mu-social-login-public.js' ), 
+				false 
+			);
 
-		wp_localize_script( 
-			$this->plugin_name, 
-			'msl', 
-			apply_filters( 
-				'msl/js_vars', 
-				array(
-					'ajaxurl'	=> admin_url('admin-ajax.php'),
-					'site_url'	=> home_url(),
-					// 'current_url' => $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]",
-					'fb_scopes'       => 'email,public_profile',
-					'fb_app_id'      => $this->fb_opts['fb_client_id'],
-					'l18n' 		=> array(
-						//'chrome_ios_alert'      => 'Please login into Pan and then click connect button again',
+			wp_localize_script( 
+				$this->plugin_name, 
+				'msl', 
+				apply_filters( 
+					'msl/js_vars', 
+					array(
+						'ajaxurl'	=> admin_url('admin-ajax.php'),
+						'site_url'	=> home_url(),
+						// 'current_url' => $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]",
+						'fb_scopes'       => 'email,public_profile',
+						'fb_app_id'      => $this->fb_opts['fb_client_id'],
+						'l18n' 		=> array(
+							//'chrome_ios_alert'      => 'Please login into Pan and then click connect button again',
+						)
 					)
 				)
-			)
-		);
+			);
+		}
 	}
 
 	public function add_google_meta_tags() {
-		?>
-		<meta name="google-signin-client_id" content="<?php echo $this->google_opts['google_client_id'];?>">
-		<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
-		<?php
+		$login_page_slug = $this->general_opts['login_page_slug'];
+		if (empty($login_page_slug)) {
+			$login_page_slug = 'login';
+		}
+		if (is_page($login_page_slug)) {
+			?>
+			<meta name="google-signin-client_id" content="<?php echo $this->google_opts['google_client_id'];?>">
+			<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+			<?php
+		}
 	}
 
 	// ajax func: FB 登入按鈕
